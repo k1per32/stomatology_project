@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+
+<h2>Расписание</h2>
+
+<table>
+    <thead>
+
+    <th>Время/Врач</th>
+    <th th:text="${doctors[0]}"></th>
+    <th th:text="${doctors[1]}"></th>
+    <th th:text="${doctors[2]}"></th>
+
+
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${schedulesMap}">
+        <th th:text="${#dates.format(entry.getValue().dateTimeOfReceipt, 'HH:mm')}"></th>
+
+        <td th:each="doctor : ${doctors}">
+            <p th:if="${doctor.id == entry.getValue().doctorId}"
+            th:text="${patientMap.get(entry.getValue().patientId)}"></p>
+
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<br><br>
+<table>
+    <th>
+        <input type="button" value="Добавить нового доктора" onclick="window.location.href='/doctor/add'">
+    </th>
+    <th>
+        <input type="button" value="Добавить нового пациента" onclick="window.location.href='/patient/add'">
+    </th>
+    <th>
+        <input type="button" value="Список докторов" onclick="window.location.href='/doctor/'">
+    </th>
+    <th>
+        <input type="button" value="Список пациентов" onclick="window.location.href='/patient/'">
+    </th>
+    <th>
+        <input type="button" value="Новая запись пациента"
+               onclick="window.location.href='/schedule/create'">
+    </th>
+</table>
+</body>
+</html>

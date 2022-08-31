@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая запись пациента на прием</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/schedule/created}" method="post">
+    <h2>Пациент</h2>
+    <select th:field="${schedule.patientId}">
+        <option th:each="patient : ${patients}"
+                th:value="${patient.id}"
+                th:utext="${patient.surname} + ' ' + ${patient.name} + ' ' + ${patient.patronymic}
++ ' ' + ${patient.dateOfBirth}"/>
+    </select>
+    <input type="button" value="Добавить нового пациента" onclick="window.location.href='/patient/add'">
+
+    <br>
+
+    <h2>Лечащий врач</h2>
+    <select th:field="${schedule.doctorId}">
+        <option th:each="doctor : ${doctors}"
+                th:value="${doctor.id}"
+                th:utext="${doctor.surname} + ' ' + ${doctor.name} + ' ' + ${doctor.patronymic}"/>
+    </select>
+
+
+    <br><br>
+    <h2>Время приема</h2>
+    <b><input type="datetime-local" th:field="${schedule.dateTimeOfReceipt}" id="dateTimeOfReceipt" placeholder="Время приема"
+              required></b>
+    <br><br>
+    <input type="submit" value="Назначить пациента">
+
+</form>
+
+</body>
+</html>

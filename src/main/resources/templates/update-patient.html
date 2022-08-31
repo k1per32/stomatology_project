@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение пациента</title>
+</head>
+<body>
+<h2>Изменение пациента</h2>
+<br>
+<form action="#" th:action="@{/patient/updated/{id}(id=${patient.id})}" th:object="${patient}" method="post">
+
+    <b><label for="surname">1.Фамилия</label></b>
+    <input type="text" th:field="*{surname}" id="surname" placeholder="Фамилия" required>
+    <br><br>
+
+    <b><label for="name">2.Имя</label></b>
+    <input type="text" th:field="*{name}" id="name" placeholder="Имя" required>
+    <br><br>
+
+    <b><label for="patronymic">3.Отчество</label></b>
+    <input type="text" th:field="*{patronymic}" id="patronymic" placeholder="Отчество" required>
+    <br><br>
+
+    <b>
+        <div class="active-table-tab">4.Пол</div>
+    </b>
+    <label><input type="radio" value="Мужской" name="sex">Мужской</label>
+    <label><input type="radio" value="Женский" name="sex">Женский</label>
+    <br><br>
+
+    <b><label for="dateOfBirth">5.Дата рождения</label></b>
+    <input type="date" th:field="*{dateOfBirth}" id="dateOfBirth" placeholder="Дата рождения" required>
+    <br><br>
+
+    <b><label for="address">6.Адрес регистрации (проживания)</label></b>
+    <input type="text" th:field="*{address}" id="address" placeholder="Адрес регистрации (проживания)" required
+           size="100">
+    <br><br>
+
+    <b><label for="iNN">7.ИНН</label></b>
+    <input type="text" th:field="*{iNN}" id="iNN" placeholder="ИНН" size="25">
+    <br><br>
+
+    <b><label for="mobileNumber">8.Мобильный телефон</label></b>
+    <input type="tel" th:field="*{mobileNumber}" id="mobileNumber" placeholder="Мобильный телефон" size="25">
+    <br><br>
+
+    <b><label for="email">9.Электронная почта</label></b>
+    <input type="email" th:field="*{email}" id="email" placeholder="Электронная почта" size="25">
+    <br><br>
+
+    <b><label for="serialNumberPassport">10.Серия и номер паспорта</label></b>
+    <input type="text" th:field="*{serialNumberPassport}" id="serialNumberPassport" placeholder="Серия и номер паспорта"
+           size="25">
+    <br><br>
+
+    <b><label for="diagnosis">11.Диагноз</label></b>
+    <input type="text" th:field="*{diagnosis}" id="diagnosis" placeholder="Диагноз" size="100">
+    <br><br>
+
+    <b><label for="access">12.Информированное добровольное согласие на виды медицинских вмешательств,
+        включенные в перечень определенных видов медицинских вмешательств:</label></b>
+    <input type="checkbox" th:field="*{access}" id="access" required size="25">
+    <br><br>
+
+    <b><label for="dateOfAccess">13.Дата согласия и время</label></b>
+    <input type="datetime-local" th:field="*{dateOfAccess}" id="dateOfAccess" required>
+    <br><br>
+
+    <b><label for="complaints">14.Жалобы</label></b>
+    <input type="text" th:field="*{complaints}" id="complaints" placeholder="Жалобы" size="100">
+    <br><br>
+
+    <b><label for="concomitantDiseases">15.Перенесенные и сопутствующие заболевания</label></b>
+    <input type="text" th:field="*{concomitantDiseases}" id="concomitantDiseases"
+           placeholder="Перенесенные и сопутствующие заболевания" size="100">
+    <br><br>
+
+    <b><label for="devOfRealDisease">16.Развитие настоящего заболевания</label></b>
+    <input type="text" th:field="*{devOfRealDisease}" id="devOfRealDisease"
+           placeholder="Развитие настоящего заболевания" size="100">
+    <br><br>
+
+    <b>17.Данные объективного обследования:</b>
+
+    <b><label for="conscience">Сознание</label></b>
+    <input type="text" th:field="${patient.idObjectiveSurveyData.conscience}" id="conscience"
+           placeholder="Сознание" size="50">
+    <br><br>
+
+    <b><label for="health">Самочувствие</label></b>
+    <input type="text" th:field="${patient.idObjectiveSurveyData.health}" id="health"
+           placeholder="Самочувствие" size="50">
+    <br><br>
+
+    <b><label for="face">Лицо</label></b>
+    <input type="text" th:field="${patient.idObjectiveSurveyData.face}" id="face"
+           placeholder="Лицо" size="50">
+    <br><br>
+
+    <b><label for="skinCovers">Кожные покровы</label></b>
+    <input type="text" th:field="${patient.idObjectiveSurveyData.skinCovers}" id="skinCovers"
+           placeholder="Кожные покровы" size="50">
+    <br><br>
+
+    <b><label for="openMouth">Открывание рта</label></b>
+    <input type="text" th:field="${patient.idObjectiveSurveyData.openMouth}" id="openMouth"
+           placeholder="Открывание рта" size="50">
+    <br><br>
+
+    <b><label for="exVestibuleOralCavity">18.Осмотр преддверия и полости рта</label></b>
+    <input type="text" th:field="*{exVestibuleOralCavity}" id="exVestibuleOralCavity"
+           placeholder="Осмотр преддверия и полости рта" size="100">
+    <br><br>
+
+    <b><label for="conditionLymphNodes">19.Состояние лимфоузлов</label></b>
+    <input type="text" th:field="*{conditionLymphNodes}" id="conditionLymphNodes"
+           placeholder="Состояние лимфоузлов" size="50">
+    <br><br>
+
+    <b><label for="conditionTeethPeriodontal">20.Состояние зубов и пародонта</label></b>
+    <input type="text" th:field="*{conditionTeethPeriodontal}" id="conditionTeethPeriodontal"
+           placeholder="Состояние зубов и пародонта" size="50">
+    <br><br>
+
+    <b>21.Зубная формула</b>
+    <br><br>
+
+
+
+    <!--    image-->
+
+
+
+    <b><label for="key"></label></b>
+    <input type="text" th:field="${dentalFormulaPatient.tooth}" id="key"
+           placeholder="Ключ" size="50">
+    <br><br>
+
+    <b><label for="value"></label></b>
+    <input type="text" th:field="${dentalFormulaPatient.problems}" id="value"
+           placeholder="Значение" size="50">
+    <br><br>
+
+    <b><label for="occlusion">22.Прикус</label></b>
+    <input type="text" th:field="*{occlusion}" id="occlusion"
+           placeholder="Прикус" size="50">
+    <br><br>
+
+    <b><label for="hygieneIndex">23.Индекс гигиены</label></b>
+    <input type="number" th:field="*{hygieneIndex}" id="hygieneIndex"
+           placeholder="Индекс гигиены">
+    <br><br>
+
+    <b><label for="prelimDiagnosis">24.Предварительный диагноз</label></b>
+    <input type="text" th:field="*{prelimDiagnosis}" id="prelimDiagnosis"
+           placeholder="Предварительный диагноз" size="100">
+    <br><br>
+
+    <b><label for="prelimDiagnosisCode">Код МКБ(Предварительный диагноз)</label></b>
+    <input type="text" th:field="${patient.id_mkb_code.prelimDiagnosisCode}" id="prelimDiagnosisCode"
+           placeholder="Код МКБ(Предварительный диагноз)" size="5">
+    <br><br>
+
+    <b><label for="surveyPlan">25.План обследования</label></b>
+    <input type="text" th:field="*{surveyPlan}" id="surveyPlan"
+           placeholder="План обследования" size="100">
+    <br><br>
+
+    <b><label for="surveyData">26.Данные обследования</label></b>
+    <input type="text" th:field="*{surveyData}" id="surveyData"
+           placeholder="Данные обследования" size="100">
+    <br><br>
+
+    <b><label for="clinicalDiagnosis">27.Клинический диагноз</label></b>
+    <input type="text" th:field="*{clinicalDiagnosis}" id="clinicalDiagnosis"
+           placeholder="Клинический диагноз" size="100">
+    <br><br>
+    <b><label for="clinicalDiagnosisCode">Код МКБ(Клинический диагноз)</label></b>
+    <input type="text" th:field="${patient.id_mkb_code.clinicalDiagnosisCode}" id="clinicalDiagnosisCode"
+           placeholder="Код МКБ(Клинический диагноз)">
+    <br><br>
+
+    <b><label for="treatmentPlan">28.План лечения</label></b>
+    <input type="text" th:field="*{treatmentPlan}" id="treatmentPlan"
+           placeholder="План лечения" size="100">
+
+    <br><br>
+    <b><label for="treatmentProtocol">29.Протокол лечения</label></b>
+    <input type="text" th:field="*{treatmentProtocol}" id="treatmentProtocol"
+           placeholder="Протокол лечения" size="150">
+    <br><br>
+
+    <input type="submit" value="Изменить">
+</form>
+</body>
+</html>
