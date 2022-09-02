@@ -2,7 +2,6 @@ package com.example.pet_project.controller;
 
 import com.example.pet_project.entity.*;
 import com.example.pet_project.repository.*;
-import net.bytebuddy.asm.Advice;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.concurrent.ScheduledFuture;
 
 @Controller
 public class MainController {
@@ -47,54 +45,39 @@ public class MainController {
             }
         });
 
-        System.out.println(scheduleList + "scheduleList");
-
-        SessionFactory sessionFactory = new Configuration()
-                .configure()
-                .addAnnotatedClass(Doctor.class)
-                .addAnnotatedClass(Patient.class)
-                .addAnnotatedClass(DentalFormula.class)
-                .addAnnotatedClass(MkbCodes.class)
-                .addAnnotatedClass(ObjectiveSurveyData.class)
-                .addAnnotatedClass(Schedule.class)
-                .buildSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        Query query1 = session.createQuery
-                ("FROM Doctor", Doctor.class);
-        List<Doctor> doctorList = query1.getResultList();
-        System.out.println(doctorList + "doctorList");
-
-        Query query2 = session.createQuery
-                ("FROM Patient", Patient.class);
-        List<Patient> patientList = query2.getResultList();
-        System.out.println(patientList + "patientList");
-
-        Map<Integer, Patient> patientMap = new HashMap<>();
-        for (Patient patient : patientList) {
-            patientMap.put(patient.getId(), patient);
+        List<Doctor> doctorList = new ArrayList<>();
+        for(Doctor doctor : doctorRep.findAll()){
+            doctorList.add(doctor);
         }
-        System.out.println(patientMap + "patientMap");
-        session.close();
 
-        Map<Integer, Schedule> scheduleMap = new HashMap<>();
+        Map<Date, Map<Doctor, Patient>> scheduleMap = new TreeMap<>();
         for (Schedule schedule : scheduleList) {
-            scheduleMap.put(schedule.getId(), schedule);
+            if (!scheduleMap.containsKey(schedule.getDateTimeOfReceipt())) {
+                scheduleMap.put(schedule.getDateTimeOfReceipt(), new TreeMap<>() {{
+                    put(doctorRep.getReferenceById(schedule.getDoctorId()),
+                            patientRep.getReferenceById(schedule.getPatientId()));
+                }});
+            } else {
+                Map<Doctor, Patient> map = scheduleMap.get(schedule.getDateTimeOfReceipt());
+                map.put(doctorRep.getReferenceById(schedule.getDoctorId()),
+                        patientRep.getReferenceById(schedule.getPatientId()));
+                scheduleMap.put(schedule.getDateTimeOfReceipt(), map);
+            }
         }
         System.out.println(scheduleMap + "scheduleMap");
 
+        for (Map.Entry<Date, Map<Doctor, Patient>> map : scheduleMap.entrySet()) {
+                System.out.println(map.getValue().entrySet().iterator().next().getKey());
+
+        }
 
 
-
-        model.addAttribute("schedulesMap", scheduleMap);//
-        model.addAttribute("patientMap", patientMap);//
-        model.addAttribute("doctors", doctorList);//
+        model.addAttribute("schedulesMap", scheduleMap);
+        model.addAttribute("doctors", doctorRep.findAll());
         return "index";
     }
 
     public LocalDate convertDateToLocalDate(Date dateTimeOfReceipt) {
-        return dateTimeOfReceipt.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        return dateTimeOfReceipt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
