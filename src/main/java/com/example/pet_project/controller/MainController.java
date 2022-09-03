@@ -2,9 +2,6 @@ package com.example.pet_project.controller;
 
 import com.example.pet_project.entity.*;
 import com.example.pet_project.repository.*;
-import org.hibernate.*;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,12 +62,6 @@ public class MainController {
             }
         }
         System.out.println(scheduleMap + "scheduleMap");
-
-        for (Map.Entry<Date, Map<Doctor, Patient>> map : scheduleMap.entrySet()) {
-                System.out.println(map.getValue().entrySet().iterator().next().getKey());
-
-        }
-
 
         model.addAttribute("schedulesMap", scheduleMap);
         model.addAttribute("doctors", doctorRep.findAll());

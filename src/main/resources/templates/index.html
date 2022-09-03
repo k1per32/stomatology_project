@@ -15,19 +15,23 @@
     <th th:each="doctor: ${doctors}"
         th:text="${doctor}"></th>
 
-
     </thead>
     <tbody>
     <tr th:each="entry, entryStat : ${schedulesMap.entrySet()}">
         <th th:text="${#dates.format(entry.getKey(), 'HH:mm')}"></th>
 
-        <td th:each="doctor, doctorStat : ${doctors}"
-            th:switch="${entry.getValue().entrySet().iterator().next().getKey()}">
-<!--            <div th:case="${doctor}" th:text="${entry.getValue().entrySet().iterator().next().getValue()}"></div>-->
-            <div th:case="${doctor}" th:text="${entry.getValue().entrySet().iterator().next().getValue()}"></div>
-
-
-        </td>
+        <td th:if="${entry.getValue().keySet().contains(doctors[0])}"
+            th:text="${entry.getValue().get(doctors[0])}"></td>
+        <td th:unless="${entry.getValue().keySet().contains(doctors[0])}"
+            text="-"></td>
+        <td th:if="${entry.getValue().keySet().contains(doctors[1])}"
+            th:text="${entry.getValue().get(doctors[1])}"></td>
+        <td th:unless="${entry.getValue().keySet().contains(doctors[1])}"
+            text="-"></td>
+        <td th:if="${entry.getValue().keySet().contains(doctors[2])}"
+            th:text="${entry.getValue().get(doctors[2])}"></td>
+        <td th:unless="${entry.getValue().keySet().contains(doctors[2])}"
+            text="-"></td>
     </tr>
     </tbody>
     <style>.table_sort table {
